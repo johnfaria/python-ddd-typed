@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Self
 
-from src.core.domain.protocols.entity_protocol import Entity
+from src.core.domain.protocols.entity_protocol import AggregateRoot
 
 
 @dataclass
@@ -18,7 +18,7 @@ class UserStatus(Enum):
     INACTIVE = "inactive"
 
 
-class User(Entity[UserProps]):
+class User(AggregateRoot[UserProps]):
     status: UserStatus
 
     def __init__(

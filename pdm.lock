@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:452ccf9e54940dc63c821fe0f434e9bfb4876e9b2cdfdd7d1dad444259eb6e89"
+content_hash = "sha256:77e4eeaddd0aec77b32acd54ec92192b567fb058ee4d15a4726e059db9216da9"
 
 [[package]]
 name = "annotated-types"
@@ -179,6 +179,19 @@ dependencies = [
 files = [
     {file = "pytest-8.2.0-py3-none-any.whl", hash = "sha256:1733f0620f6cda4095bbf0d9ff8022486e91892245bb9e7d5542c018f612f233"},
     {file = "pytest-8.2.0.tar.gz", hash = "sha256:d507d4482197eac0ba2bae2e9babf0672eb333017bcedaa5fb1a3d42c1174b3f"},
+]
+
+[[package]]
+name = "pytest-asyncio"
+version = "0.23.7"
+requires_python = ">=3.8"
+summary = "Pytest support for asyncio"
+dependencies = [
+    "pytest<9,>=7.0.0",
+]
+files = [
+    {file = "pytest_asyncio-0.23.7-py3-none-any.whl", hash = "sha256:009b48127fbe44518a547bddd25611551b0e43ccdbf1e67d12479f569832c20b"},
+    {file = "pytest_asyncio-0.23.7.tar.gz", hash = "sha256:5f5c72948f4c49e7db4f29f2521d4031f1c27f86e57b046126654083d4770268"},
 ]
 
 [[package]]

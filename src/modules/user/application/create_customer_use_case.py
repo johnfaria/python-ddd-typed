@@ -24,13 +24,13 @@ class CreateCustomerUseCase(UseCaseProtocol[CreateCustomerInput, CreateCustomerO
     def __init__(self, user_repository: UserRepositoryProtocol):
         self.user_repository = user_repository
 
-    def handle(self, input: CreateCustomerInput) -> CreateCustomerOutput:
-        user = self.user_repository.find_by_email(input.email)
+    async def handle(self, input: CreateCustomerInput) -> CreateCustomerOutput:
+        user = await self.user_repository.find_by_email(input.email)
         if user:
             raise ValueError("User already exists")
         props = UserProps(input.name, input.email, input.password)
         user = User.create(props)
-        self.user_repository.create(user)
+        await self.user_repository.create(user)
         return CreateCustomerOutput(
             user.id, user.props.name, user.props.email, user.status.value
         )
