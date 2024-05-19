@@ -1,0 +1,36 @@
+from dataclasses import dataclass
+
+from core.application.protocols.use_case_protocol import UseCaseProtocol
+from modules.user.domain.user import User, UserProps
+from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
+
+
+@dataclass
+class CreateCustomerInput:
+    name: str
+    email: str
+    password: str
+
+
+@dataclass
+class CreateCustomerOutput:
+    id: str
+    name: str
+    email: str
+    status: str
+
+
+class CreateCustomerUseCase(UseCaseProtocol[CreateCustomerInput, CreateCustomerOutput]):
+    def __init__(self, user_repository: UserRepositoryProtocol):
+        self.user_repository = user_repository
+
+    def handle(self, input: CreateCustomerInput) -> CreateCustomerOutput:
+        user = self.user_repository.find_by_email(input.email)
+        if user:
+            raise ValueError("User already exists")
+        props = UserProps(input.name, input.email, input.password)
+        user = User.create(props)
+        self.user_repository.create(user)
+        return CreateCustomerOutput(
+            user.id, user.props.name, user.props.email, user.status.value
+        )

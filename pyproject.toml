@@ -1,0 +1,31 @@
+[project]
+name = "python-interview"
+version = "0.1.0"
+description = "Domain-Driven Design and Clean Architecure in python."
+authors = [
+    {name = "John Faria", email = "johnwbf@hotmail.com"},
+]
+dependencies = [
+    "pydantic>=2.7.1",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.4.3",
+    "pytest>=8.2.0",
+    "jedi>=0.19.1",
+    "mypy>=1.10.0",
+]
+
+[tool.pdm.scripts]
+dev = "python src/main.py"
+lint = "ruff check src"
+format = "ruff format src"
+test = "pytest"
