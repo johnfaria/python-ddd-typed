@@ -1,7 +1,7 @@
 import pytest
 
-from src.modules.user.domain.user import User, UserProps
-from src.modules.user.repositories.user_repository_in_memory import (
+from modules.user.domain.user import User, UserProps
+from modules.user.repositories.user_repository_in_memory import (
     UserRepositoryInMemory,
 )
 

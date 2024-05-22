@@ -1,6 +1,6 @@
 import asyncio
-from src.core.domain.protocols.entity_protocol import AggregateRoot
-from src.core.domain.protocols.repository_protocol import Repository
+from core.domain.protocols.entity_protocol import AggregateRoot
+from core.domain.protocols.repository_protocol import Repository
 
 
 class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Self
 
-from src.core.domain.protocols.entity_protocol import AggregateRoot
+from core.domain.protocols.entity_protocol import AggregateRoot
 
 
 @dataclass
