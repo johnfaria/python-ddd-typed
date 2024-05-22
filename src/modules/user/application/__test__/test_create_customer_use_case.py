@@ -31,7 +31,6 @@ class TestCreateCustomerUseCase:
         assert output.email == "any_email"
         assert output.status == "active"
 
-
     @pytest.mark.asyncio
     async def test_should_not_create_customer_with_duplicated_email(self):
         create_customer_use_case = CreateCustomerUseCase(self.user_repository)

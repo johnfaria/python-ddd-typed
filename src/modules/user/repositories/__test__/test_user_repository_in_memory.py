@@ -5,15 +5,15 @@ from src.modules.user.repositories.user_repository_in_memory import (
     UserRepositoryInMemory,
 )
 
+
 @pytest.mark.asyncio
 async def test_user_repository_in_memory_create():
     user_repository = UserRepositoryInMemory()
-    user_props = UserProps(
-        name="any_name", email="any_email", password="any_password"
-    )
+    user_props = UserProps(name="any_name", email="any_email", password="any_password")
     user = User.create(user_props)
     await user_repository.create(user)
     assert user_repository.entities[0] == user
+
 
 class TestUserRepositoryInMemory:
     user_repository: UserRepositoryInMemory
@@ -47,7 +47,7 @@ class TestUserRepositoryInMemory:
         user = User.create(user_props)
         await self.user_repository.create(user)
         assert await self.user_repository.find_by_email(user.props.email) == user
-        
+
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_find_all(self):
         user_props = UserProps(
@@ -56,7 +56,7 @@ class TestUserRepositoryInMemory:
         user = User.create(user_props)
         await self.user_repository.create(user)
         assert await self.user_repository.find_all() == [user]
-        
+
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_delete(self):
         user_props = UserProps(
@@ -66,7 +66,7 @@ class TestUserRepositoryInMemory:
         await self.user_repository.create(user)
         await self.user_repository.delete(user.id)
         assert self.user_repository.entities == []
-        
+
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_update(self):
         user_props = UserProps(
@@ -80,3 +80,17 @@ class TestUserRepositoryInMemory:
         user_from_repository.deactivate()
         await self.user_repository.update(user_from_repository)
         assert self.user_repository.entities[0] == user_from_repository
+
+    @pytest.mark.asyncio
+    async def test_user_repository_in_memory_bulk_create(self):
+        user_props = UserProps(
+            name="any_name", email="any_email", password="any_password"
+        )
+        user = User.create(user_props)
+        users = [User.create(user_props) for _ in range(10)]
+        await self.user_repository.bulk_create([user])
+        assert self.user_repository.entities[0] == user
+        assert len(self.user_repository.entities) == 1
+        await self.user_repository.bulk_create(users)
+        assert self.user_repository.entities == [user] + users
+        assert len(self.user_repository.entities) == 11
