@@ -1,7 +1,6 @@
-import uuid
 from dataclasses import dataclass
 from enum import Enum
-from typing import Self
+from typing import Optional, Self
 
 from core.domain.protocols.entity_protocol import AggregateRoot
 
@@ -22,9 +21,9 @@ class User(AggregateRoot[UserProps]):
     status: UserStatus
 
     def __init__(
-        self, props: UserProps, status: UserStatus, id: str | None = None
+        self, props: UserProps, status: UserStatus, id: Optional[str] = None
     ) -> None:
-        self.id = id if id else str(uuid.uuid4())
+        self.id = id
         self.props = props
         self.status = status
 

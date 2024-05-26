@@ -1,4 +1,5 @@
 import asyncio
+from beanie import PydanticObjectId
 from core.domain.protocols.entity_protocol import AggregateRoot
 from core.domain.protocols.repository_protocol import Repository
 
@@ -11,6 +12,7 @@ class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):
 
     async def create(self, entity: T) -> None:
         self.entities.append(entity)
+        entity.set_id(str(PydanticObjectId()))
 
     async def find_by_id(self, entity_id: str) -> T | None:
         user = next(
@@ -28,6 +30,8 @@ class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):
         self.entities.remove(user)
 
     async def update(self, entity: T) -> None:
+        if not entity.id:
+            raise ValueError("Cannot update entity without ID")
         user = await self.find_by_id(entity.id)
         if not user:
             raise ValueError("Entity not found")

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import cast
 
 from core.application.protocols.use_case_protocol import UseCaseProtocol
 from modules.user.domain.user import User, UserProps
@@ -32,5 +33,5 @@ class CreateCustomerUseCase(UseCaseProtocol[CreateCustomerInput, CreateCustomerO
         user = User.create(props)
         await self.user_repository.create(user)
         return CreateCustomerOutput(
-            user.id, user.props.name, user.props.email, user.status.value
+            cast(str, user.id), user.props.name, user.props.email, user.status.value
         )
