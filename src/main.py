@@ -14,5 +14,6 @@ async def main():
     result = await use_case.handle(input)
     print(result)
 
+
 if __name__ == "__main__":
     asyncio.run(main())

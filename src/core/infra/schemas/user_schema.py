@@ -1,19 +1,22 @@
-import asyncio
-from beanie import Document, init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
+from beanie import Document
+from beanie.odm.actions import Update, before_event
+from pydantic import Field
+from datetime import datetime
+
 
 class UserDocument(Document):
     name: str
     email: str
     password: str
     status: str
-    
-async def main():
-    client = AsyncIOMotorClient("mongodb://admin:secret@localhost:27017")
-    await init_beanie(database=client.db_name, document_models=[UserDocument])
-    # user = UserDocument(name="John")
-    # await user.insert()
+    salt: str
 
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime | None = None
 
-if __name__ == "__main__":
-    asyncio.run(main())
+    @before_event([Update])
+    def update_timestamp(self):
+        self.updated_at = datetime.now()
+
+    class Settings:
+        name = "users"

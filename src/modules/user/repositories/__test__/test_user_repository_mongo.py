@@ -1,4 +1,3 @@
-import logging
 import pytest
 import pytest_asyncio
 from core.infra.database.mongo_database import (
@@ -6,7 +5,7 @@ from core.infra.database.mongo_database import (
     MongoDocumentManager,
 )
 from core.infra.schemas.user_schema import UserDocument
-from modules.user.domain.user import User, UserProps
+from modules.user.domain.user import CreateUserProps, User
 from modules.user.repositories.user_repository_mongo import UserRepositoryMongo
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
@@ -30,7 +29,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_create(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -45,7 +44,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_find_by_id(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -60,7 +59,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_find_by_email(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -75,7 +74,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_find_all(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -89,7 +88,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_delete(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -103,7 +102,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_update(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = user_repository.next_id()
@@ -121,7 +120,7 @@ class TestUserRepositoryMongo:
     async def test_user_repository_in_memory_bulk_create(
         self, user_repository: UserRepositoryProtocol
     ):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user = User.create(user_repository.next_id(), user_props)

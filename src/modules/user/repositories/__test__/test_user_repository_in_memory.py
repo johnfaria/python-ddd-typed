@@ -1,6 +1,6 @@
 import pytest
 
-from modules.user.domain.user import User, UserProps
+from modules.user.domain.user import CreateUserProps, User
 from modules.user.repositories.user_repository_in_memory import (
     UserRepositoryInMemory,
 )
@@ -14,7 +14,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_create(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -24,7 +24,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_find_by_id(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -34,7 +34,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_find_by_email(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -44,7 +44,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_find_all(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -54,7 +54,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_delete(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -65,7 +65,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_update(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user_id = self.user_repository.next_id()
@@ -80,7 +80,7 @@ class TestUserRepositoryInMemory:
 
     @pytest.mark.asyncio
     async def test_user_repository_in_memory_bulk_create(self):
-        user_props = UserProps(
+        user_props = CreateUserProps(
             name="any_name", email="any_email", password="any_password"
         )
         user = User.create(self.user_repository.next_id(), user_props)

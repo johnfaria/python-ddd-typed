@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import cast
 
 from core.application.protocols.use_case_protocol import UseCaseProtocol
-from modules.user.domain.user import User, UserProps
+from modules.user.domain.user import CreateUserProps, User
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 
@@ -30,9 +30,12 @@ class CreateCustomerUseCase(UseCaseProtocol[CreateCustomerInput, CreateCustomerO
         if user:
             raise ValueError("User already exists")
         user_id = self.user_repository.next_id()
-        props = UserProps(input.name, input.email, input.password)
+        props = CreateUserProps(input.name, input.email, input.password)
         user = User.create(user_id, props)
         await self.user_repository.create(user)
         return CreateCustomerOutput(
-            cast(str, user.id), user.props.name, user.props.email, user.status.value
+            cast(str, user.id),
+            user.props.name,
+            user.props.email,
+            user.props.status.value,
         )
