@@ -29,8 +29,9 @@ class CreateCustomerUseCase(UseCaseProtocol[CreateCustomerInput, CreateCustomerO
         user = await self.user_repository.find_by_email(input.email)
         if user:
             raise ValueError("User already exists")
+        user_id = self.user_repository.next_id()
         props = UserProps(input.name, input.email, input.password)
-        user = User.create(props)
+        user = User.create(user_id, props)
         await self.user_repository.create(user)
         return CreateCustomerOutput(
             cast(str, user.id), user.props.name, user.props.email, user.status.value

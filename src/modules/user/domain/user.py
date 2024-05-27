@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Self
+from typing import Self
 
 from core.domain.protocols.entity_protocol import AggregateRoot
 
@@ -18,22 +18,23 @@ class UserStatus(Enum):
 
 
 class User(AggregateRoot[UserProps]):
+    __slots__ = ["id", "props", "status"]
     status: UserStatus
 
     def __init__(
-        self, props: UserProps, status: UserStatus, id: Optional[str] = None
+        self, id: str, props: UserProps, status: UserStatus
     ) -> None:
         self.id = id
         self.props = props
         self.status = status
 
     @classmethod
-    def create(cls, props: UserProps) -> Self:
-        return cls(props, status=UserStatus.ACTIVE)
+    def create(cls, id: str, props: UserProps) -> Self:
+        return cls(id, props, status=UserStatus.ACTIVE)
 
     @classmethod
     def restore(cls, id: str, props: UserProps, status: UserStatus) -> Self:
-        return cls(props, status, id)
+        return cls(id, props, status)
 
     def deactivate(self) -> None:
         if self.status == UserStatus.INACTIVE:

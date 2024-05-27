@@ -12,7 +12,6 @@ class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):
 
     async def create(self, entity: T) -> None:
         self.entities.append(entity)
-        entity.set_id(str(PydanticObjectId()))
 
     async def find_by_id(self, entity_id: str) -> T | None:
         user = next(
@@ -40,3 +39,6 @@ class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):
 
     async def bulk_create(self, entities: list[T]) -> None:
         await asyncio.gather(*(self.create(entity) for entity in entities))
+
+    def next_id(self) -> str:
+        return str(PydanticObjectId())

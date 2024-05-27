@@ -6,15 +6,6 @@ from modules.user.repositories.user_repository_in_memory import (
 )
 
 
-@pytest.mark.asyncio
-async def test_user_repository_in_memory_create():
-    user_repository = UserRepositoryInMemory()
-    user_props = UserProps(name="any_name", email="any_email", password="any_password")
-    user = User.create(user_props)
-    await user_repository.create(user)
-    assert user_repository.entities[0] == user
-
-
 class TestUserRepositoryInMemory:
     user_repository: UserRepositoryInMemory
 
@@ -26,7 +17,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         assert self.user_repository.entities[0] == user
 
@@ -35,7 +27,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         assert await self.user_repository.find_by_id(user.id) == user
 
@@ -44,7 +37,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         assert await self.user_repository.find_by_email(user.props.email) == user
 
@@ -53,7 +47,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         assert await self.user_repository.find_all() == [user]
 
@@ -62,7 +57,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         await self.user_repository.delete(user.id)
         assert self.user_repository.entities == []
@@ -72,7 +68,8 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = self.user_repository.next_id()
+        user = User.create(user_id, user_props)
         await self.user_repository.create(user)
         user_from_repository = await self.user_repository.find_by_id(user.id)
         if user_from_repository is None:
@@ -86,8 +83,10 @@ class TestUserRepositoryInMemory:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
-        users = [User.create(user_props) for _ in range(10)]
+        user = User.create(self.user_repository.next_id(), user_props)
+        users = [
+            User.create(self.user_repository.next_id(), user_props) for _ in range(10)
+        ]
         await self.user_repository.bulk_create([user])
         assert self.user_repository.entities[0] == user
         assert len(self.user_repository.entities) == 1

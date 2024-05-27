@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from beanie import BeanieObjectId, PydanticObjectId
+from beanie import PydanticObjectId
 from beanie.odm.operators.update.general import Set
 from core.infra.database.mongo_database import (
     MongoConnectionManager,
@@ -20,13 +20,13 @@ class UserRepositoryMongo(UserRepositoryProtocol):
 
     async def create(self, entity: User) -> None:
         document = self.user_document(
+            id=PydanticObjectId(entity.id),
             name=entity.props.name,
             email=entity.props.email,
             status=entity.status.value,
             password=entity.props.password,
         )
-        user = await document.insert()
-        entity.set_id(str(user.id))
+        await document.insert()
 
     async def find_by_id(self, entity_id: str) -> User | None:
         user_document = await self.user_document.get(entity_id)
@@ -58,11 +58,8 @@ class UserRepositoryMongo(UserRepositoryProtocol):
         ]
 
     async def update(self, entity: User) -> None:
-        if entity.id is None:
-            logging.warning("Cannot update user without ID")
-            return None
         user = await self.user_document.find_one(
-            self.user_document.id == BeanieObjectId(entity.id)
+            self.user_document.id == PydanticObjectId(entity.id)
         )
         if not user:
             logging.warning("User not found")
@@ -111,6 +108,9 @@ class UserRepositoryMongo(UserRepositoryProtocol):
         ]
         await self.user_document.insert_many(documents)
 
+    def next_id(self) -> str:
+        return str(PydanticObjectId())
+
 
 if __name__ == "__main__":
 
@@ -122,8 +122,17 @@ if __name__ == "__main__":
         )
         await connection_manager.connect("test", document_manager.documents)
         user_repository = UserRepositoryMongo(user_document=UserDocument)
-        user_props = UserProps(name="John", email="", password="123")
-        user = User.create(user_props)
-        await user_repository.create(user)
+        users = [
+            User.create(
+                user_repository.next_id(),
+                UserProps(
+                    name=f"any_name_{i}",
+                    email=f"any_email_{i}",
+                    password=f"any_password_{i}",
+                ),
+            )
+            for i in range(20)
+        ]
+        await user_repository.bulk_create(users)
 
     asyncio.run(main())

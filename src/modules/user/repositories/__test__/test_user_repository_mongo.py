@@ -1,3 +1,4 @@
+import logging
 import pytest
 import pytest_asyncio
 from core.infra.database.mongo_database import (
@@ -11,13 +12,12 @@ from modules.user.repositories.user_repository_protocol import UserRepositoryPro
 
 
 @pytest_asyncio.fixture
-async def user_repository():
+async def user_repository(mongodb_container):
+    url = mongodb_container.get_connection_url()
     document = UserDocument
     document_manager = MongoDocumentManager()
     document_manager.add_document(document=document)
-    connection_manager = MongoConnectionManager(
-        "mongodb://admin:secret@localhost:27017"
-    )
+    connection_manager = MongoConnectionManager(url)
     await connection_manager.connect("test", document_manager.documents)
     user_repository = UserRepositoryMongo(user_document=document)
     yield user_repository
@@ -33,10 +33,9 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
-        if not user.id:
-            assert False
         user_from_repo = await user_repository.find_by_id(user.id)
         if user_from_repo is None:
             assert False
@@ -49,10 +48,9 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
-        if not user.id:
-            assert False
         user_from_repo = await user_repository.find_by_id(user.id)
         if user_from_repo is None:
             assert False
@@ -65,7 +63,8 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
         user_from_repo = await user_repository.find_by_email(user.props.email)
         if user_from_repo is None:
@@ -79,7 +78,8 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
         users_from_repo = await user_repository.find_all()
         assert len(users_from_repo) == 1
@@ -92,10 +92,10 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
-        if user.id:
-            await user_repository.delete(user.id)
+        await user_repository.delete(user.id)
         entities = await user_repository.find_all()
         assert entities == []
 
@@ -106,10 +106,9 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
+        user_id = user_repository.next_id()
+        user = User.create(user_id, user_props)
         await user_repository.create(user)
-        if not user.id:
-            assert False
         user_from_repository = await user_repository.find_by_id(user.id)
         if user_from_repository is None:
             assert False
@@ -125,8 +124,8 @@ class TestUserRepositoryMongo:
         user_props = UserProps(
             name="any_name", email="any_email", password="any_password"
         )
-        user = User.create(user_props)
-        users = [User.create(user_props) for _ in range(10)]
+        user = User.create(user_repository.next_id(), user_props)
+        users = [User.create(user_repository.next_id(), user_props) for _ in range(10)]
         await user_repository.bulk_create([user])
         entities = await user_repository.find_all()
         assert len(entities) == 1
