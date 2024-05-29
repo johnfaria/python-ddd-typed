@@ -1,4 +1,7 @@
 import logging
+
+import pytest
+from core.infra.config.config_pydantic import get_settings
 from modules.user.application.signin_user_use_case import (
     SigninUserInput,
     SigninUserUseCase,
@@ -10,13 +13,12 @@ from modules.user.application.update_user_use_case import (
 from modules.user.domain.entities.user import CreateUserProps, User
 from modules.user.infra.jwt.jwt_service import JwtService
 from modules.user.repositories.user_repository_in_memory import UserRepositoryInMemory
-import pytest
 
 
 class TestUpdateUserUseCase:
     @pytest.mark.asyncio
     async def test_update_user(self):
-        jwt_service = JwtService("secret")
+        jwt_service = JwtService(get_settings())
         user_repository = UserRepositoryInMemory()
         user_id = user_repository.next_id()
         user = User.create(
@@ -45,7 +47,7 @@ class TestUpdateUserUseCase:
 
         logging.warning(signin_user_result)
 
-        use_case = UpdateUserUseCase(user_repository, jwt_service)
+        use_case = UpdateUserUseCase(user_repository)
         input = UpdateUserInput(
             token=signin_user_result.token,
             id=user.id,

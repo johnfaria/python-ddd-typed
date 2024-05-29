@@ -1,4 +1,7 @@
+import pytest
 import logging
+
+from core.infra.config.config_pydantic import get_settings
 from modules.user.application.signin_user_use_case import (
     SigninUserInput,
     SigninUserOutput,
@@ -7,7 +10,6 @@ from modules.user.application.signin_user_use_case import (
 from modules.user.domain.entities.user import CreateUserProps, User
 from modules.user.infra.jwt.jwt_service import JwtService
 from modules.user.repositories.user_repository_in_memory import UserRepositoryInMemory
-import pytest
 
 
 class TestSigninUserUseCase:
@@ -20,7 +22,7 @@ class TestSigninUserUseCase:
             CreateUserProps("any_name", "any_email", "any_password"),
         )
         await user_repository.create(user)
-        jwt_service = JwtService("secret")
+        jwt_service = JwtService(get_settings())
         use_case = SigninUserUseCase(
             user_repository=user_repository,
             jwt_service=jwt_service,

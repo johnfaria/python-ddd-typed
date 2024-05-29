@@ -1,12 +1,8 @@
 from dataclasses import dataclass
-from functools import wraps, partial
-import logging
-from typing import Any, Awaitable, Callable
-from typing import Callable
 
 from core.application.protocols.use_case_protocol import UseCaseProtocol
-from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 from modules.user.infra.jwt.jwt_service import require_auth_jwt
+from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 
 @dataclass

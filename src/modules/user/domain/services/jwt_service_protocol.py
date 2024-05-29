@@ -8,6 +8,7 @@ class JwtPayload(NamedTuple):
     iat: int
     exp: int
 
+
 @runtime_checkable
 class JwtServiceProtocol(Protocol):
     @abstractmethod
