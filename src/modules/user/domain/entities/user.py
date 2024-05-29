@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Self
 
 from core.domain.protocols.entity_protocol import AggregateRoot
-from modules.user.domain.password_vo import Password, PasswordProps
+from modules.user.domain.value_objects.password_vo import Password, PasswordProps
 
 
 class UserStatus(Enum):

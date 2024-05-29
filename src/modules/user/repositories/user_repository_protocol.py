@@ -1,7 +1,7 @@
 from typing import Protocol, runtime_checkable
 
 from core.domain.protocols.repository_protocol import Repository
-from modules.user.domain.user import User
+from modules.user.domain.entities.user import User
 
 
 @runtime_checkable

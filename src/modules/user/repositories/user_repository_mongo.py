@@ -9,7 +9,7 @@ from core.infra.database.mongo_database import (
     MongoDocumentManager,
 )
 from core.infra.schemas.user_schema import UserDocument
-from modules.user.domain.user import CreateUserProps, RestoreUserProps, User
+from modules.user.domain.entities.user import CreateUserProps, RestoreUserProps, User
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 

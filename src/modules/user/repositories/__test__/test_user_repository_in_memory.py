@@ -1,6 +1,6 @@
 import pytest
 
-from modules.user.domain.user import CreateUserProps, User
+from modules.user.domain.entities.user import CreateUserProps, User
 from modules.user.repositories.user_repository_in_memory import (
     UserRepositoryInMemory,
 )

@@ -11,6 +11,7 @@ dependencies = [
     "beanie>=1.26.0",
     "motor>=3.4.0",
     "pydantic-settings>=2.2.1",
+    "pyjwt>=2.8.0",
 ]
 requires-python = ">=3.12"
 readme = "README.md"
@@ -27,6 +28,7 @@ dev = [
     "jedi>=0.19.1",
     "mypy>=1.10.0",
     "testcontainers>=4.5.0",
+    "vulture>=2.11",
 ]
 
 [tool.pdm.scripts]
@@ -34,3 +36,4 @@ dev = "python src/main.py"
 lint = "ruff check src"
 format = "ruff format src"
 test = "pytest"
+vulture = "vulture src"

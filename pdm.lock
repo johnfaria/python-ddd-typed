@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:17fcc0895b29c5283cbf38cd536a3f53281cb0722cb59d19fc2f670c37c9febd"
+content_hash = "sha256:3107ab94205d7a3897613d51b6f3f5651463c4b1796dd8d2f0750100f9351153"
 
 [[package]]
 name = "annotated-types"
@@ -306,6 +306,16 @@ files = [
 ]
 
 [[package]]
+name = "pyjwt"
+version = "2.8.0"
+requires_python = ">=3.7"
+summary = "JSON Web Token implementation in Python"
+files = [
+    {file = "PyJWT-2.8.0-py3-none-any.whl", hash = "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"},
+    {file = "PyJWT-2.8.0.tar.gz", hash = "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de"},
+]
+
+[[package]]
 name = "pymongo"
 version = "4.7.2"
 requires_python = ">=3.7"
@@ -460,6 +470,16 @@ summary = "HTTP library with thread-safe connection pooling, file post, and more
 files = [
     {file = "urllib3-2.2.1-py3-none-any.whl", hash = "sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d"},
     {file = "urllib3-2.2.1.tar.gz", hash = "sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"},
+]
+
+[[package]]
+name = "vulture"
+version = "2.11"
+requires_python = ">=3.8"
+summary = "Find dead code"
+files = [
+    {file = "vulture-2.11-py2.py3-none-any.whl", hash = "sha256:12d745f7710ffbf6aeb8279ba9068a24d4e52e8ed333b8b044035c9d6b823aba"},
+    {file = "vulture-2.11.tar.gz", hash = "sha256:f0fbb60bce6511aad87ee0736c502456737490a82d919a44e6d92262cb35f1c2"},
 ]
 
 [[package]]

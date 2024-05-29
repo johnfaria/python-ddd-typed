@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import cast
 
 from core.application.protocols.use_case_protocol import UseCaseProtocol
-from modules.user.domain.user import CreateUserProps, User
+from modules.user.domain.entities.user import CreateUserProps, User
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 

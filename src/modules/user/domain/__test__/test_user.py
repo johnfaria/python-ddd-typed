@@ -1,5 +1,5 @@
-from modules.user.domain.password_vo import Password
-from modules.user.domain.user import CreateUserProps, RestoreUserProps, User
+from modules.user.domain.value_objects.password_vo import Password
+from modules.user.domain.entities.user import CreateUserProps, RestoreUserProps, User
 
 
 class TestUserAggregate:
