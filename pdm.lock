@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:63025a39addf31f71dde96f1eaa4a7a5fb0ab50bb2c0b60a3b008907263b62ee"
+content_hash = "sha256:1f862658ebaeec7f941fd241393cc02f7fd7b09ae35564df08af0c4cd561efdc"
 
 [[package]]
 name = "annotated-types"
@@ -90,6 +90,20 @@ summary = "Cross-platform colored terminal text."
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
+]
+
+[[package]]
+name = "debugpy"
+version = "1.8.1"
+requires_python = ">=3.8"
+summary = "An implementation of the Debug Adapter Protocol for Python"
+files = [
+    {file = "debugpy-1.8.1-cp312-cp312-macosx_11_0_universal2.whl", hash = "sha256:3ebb70ba1a6524d19fa7bb122f44b74170c447d5746a503e36adc244a20ac539"},
+    {file = "debugpy-1.8.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a2e658a9630f27534e63922ebf655a6ab60c370f4d2fc5c02a5b19baf4410ace"},
+    {file = "debugpy-1.8.1-cp312-cp312-win32.whl", hash = "sha256:caad2846e21188797a1f17fc09c31b84c7c3c23baf2516fed5b40b378515bbf0"},
+    {file = "debugpy-1.8.1-cp312-cp312-win_amd64.whl", hash = "sha256:edcc9f58ec0fd121a25bc950d4578df47428d72e1a0d66c07403b04eb93bcf98"},
+    {file = "debugpy-1.8.1-py2.py3-none-any.whl", hash = "sha256:28acbe2241222b87e255260c76741e1fbf04fdc3b6d094fcf57b6c6f75ce1242"},
+    {file = "debugpy-1.8.1.zip", hash = "sha256:f696d6be15be87aef621917585f9bb94b1dc9e8aced570db1b8a6fc14e8f9b42"},
 ]
 
 [[package]]
@@ -436,6 +450,19 @@ dependencies = [
 files = [
     {file = "requests-2.32.2-py3-none-any.whl", hash = "sha256:fc06670dd0ed212426dfeb94fc1b983d917c4f9847c863f313c9dfaaffb7c23c"},
     {file = "requests-2.32.2.tar.gz", hash = "sha256:dd951ff5ecf3e3b3aa26b40703ba77495dab41da839ae72ef3c8e5d8e2433289"},
+]
+
+[[package]]
+name = "returns"
+version = "0.22.0"
+requires_python = ">=3.8.1,<4.0"
+summary = "Make your functions return something meaningful, typed, and safe!"
+dependencies = [
+    "typing-extensions<5.0,>=4.0",
+]
+files = [
+    {file = "returns-0.22.0-py3-none-any.whl", hash = "sha256:d38d6324692eeb29ec4bd698e1b859ec0ac79fb2c17bf0d302f92c8c42ef35c1"},
+    {file = "returns-0.22.0.tar.gz", hash = "sha256:c7bd85bd1e0041b44fe46c7e2f68fcc76a0546142c876229e395174bcd674f37"},
 ]
 
 [[package]]

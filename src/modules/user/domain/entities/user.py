@@ -73,6 +73,9 @@ class User(AggregateRoot[UserProps]):
             raise ValueError("User is already active")
         self.props.status = UserStatus.ACTIVE
 
+    def is_active(self) -> bool:
+        return self.props.status == UserStatus.ACTIVE
+
     def verify_password(self, password: str) -> bool:
         return self.props.password.verify(password)
 
