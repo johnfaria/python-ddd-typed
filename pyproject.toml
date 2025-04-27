@@ -1,38 +1,32 @@
 [project]
 name = "python-interview"
 version = "0.1.0"
-description = "Domain-Driven Design and Clean Architecure in python."
-authors = [
-    {name = "John Faria", email = "johnwbf@hotmail.com"},
-]
+description = "Domain-Driven Design and Clean Architecture in Python"
+authors = [{ name = "John Faria", email = "johnwbf@hotmail.com" }]
 dependencies = [
-    "pydantic>=2.7.1",
-    "pytest-asyncio>=0.23.7",
-    "beanie>=1.26.0",
-    "motor>=3.4.0",
-    "pydantic-settings>=2.2.1",
-    "pyjwt>=2.8.0",
-    "returns>=0.22.0",
+    "pydantic>=2.11.3",
+    "pytest-asyncio>=0.26.0",
+    "beanie>=1.29.0",
+    "motor>=3.7.0",
+    "pydantic-settings>=2.9.1",
+    "pyjwt>=2.10.1",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
-[tool.pdm.dev-dependencies]
+[dependency-groups]
 dev = [
-    "ruff>=0.4.3",
-    "pytest>=8.2.0",
-    "jedi>=0.19.1",
-    "mypy>=1.10.0",
-    "testcontainers>=4.5.0",
-    "vulture>=2.11",
+    "ruff>=0.11.7",
+    "pytest>=8.3.5",
+    "jedi>=0.19.2",
+    "mypy>=1.15.0",
+    "testcontainers>=4.10.0",
+    "vulture>=2.14",
     "pytest-xdist>=3.6.1",
-    "pytest-env>=1.1.3",
-    "debugpy>=1.8.1",
+    "pytest-env>=1.1.5",
+    "debugpy>=1.8.14",
+    "pre-commit>=4.2.0",
 ]
 
 [tool.pdm.scripts]
@@ -41,3 +35,4 @@ lint = "ruff check src"
 format = "ruff format src"
 test = "pytest"
 vulture = "vulture src"
+precommit = "pre-commit install"
