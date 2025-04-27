@@ -1,19 +1,17 @@
-import asyncio
-
-from modules.user.application.create_customer_use_case import (
-    CreateCustomerInput,
-    CreateCustomerUseCase,
-)
-from modules.user.repositories.user_repository_in_memory import UserRepositoryInMemory
+from core.infra.database.database_connect import close_database, initialize_database
+from fastapi import FastAPI
+from modules.user.module import UserModule
 
 
-async def main():
-    repository = UserRepositoryInMemory()
-    use_case = CreateCustomerUseCase(repository)
-    input = CreateCustomerInput(name="John Doe", email="email", password="password")
-    result = await use_case.handle(input)
-    print(result)
+def create_app() -> FastAPI:
+    app = FastAPI()
+
+    app.add_event_handler("startup", initialize_database)
+    app.add_event_handler("shutdown", close_database)
+
+    UserModule.register(app)
+
+    return app
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+app = create_app()

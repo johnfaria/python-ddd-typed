@@ -1,17 +1,21 @@
 from dataclasses import dataclass
 
 from core.application.protocols.use_case_protocol import UseCaseProtocol
-from modules.user.infra.jwt.jwt_service import require_auth_jwt
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 
 @dataclass
 class UpdateUserInput:
-    token: str
     id: str
     name: str
     email: str
-    password: str
+
+
+@dataclass
+class UpdateUserOutput:
+    id: str
+    name: str
+    email: str
 
 
 class UpdateUserUseCase(UseCaseProtocol[UpdateUserInput, None]):
@@ -21,7 +25,6 @@ class UpdateUserUseCase(UseCaseProtocol[UpdateUserInput, None]):
     ):
         self.user_repository = user_repository
 
-    @require_auth_jwt
     async def handle(self, input: UpdateUserInput):
         user = await self.user_repository.find_by_id(input.id)
         if not user:
@@ -29,3 +32,8 @@ class UpdateUserUseCase(UseCaseProtocol[UpdateUserInput, None]):
         user.props.name = input.name
         user.props.email = input.email
         await self.user_repository.update(user)
+        return UpdateUserOutput(
+            id=user.id,
+            name=user.props.name,
+            email=user.props.email,
+        )

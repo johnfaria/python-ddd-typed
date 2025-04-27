@@ -27,7 +27,7 @@ class TestSigninUserUseCase:
             user_repository=user_repository,
             jwt_service=jwt_service,
         )
-        input = SigninUserInput(username="any_email", password="any_password")
+        input = SigninUserInput(email="any_email", password="any_password")
         result = await use_case.handle(input)
         logging.warning(result)
         assert result.token is not None

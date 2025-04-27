@@ -7,7 +7,7 @@ from modules.user.repositories.user_repository_protocol import UserRepositoryPro
 
 @dataclass
 class SigninUserInput:
-    username: str
+    email: str
     password: str
 
 
@@ -24,7 +24,7 @@ class SigninUserUseCase(UseCaseProtocol[SigninUserInput, SigninUserOutput]):
         self.jwt_service = jwt_service
 
     async def handle(self, input: SigninUserInput) -> SigninUserOutput:
-        user = await self.user_repository.find_by_email(input.username)
+        user = await self.user_repository.find_by_email(input.email)
         if not user:
             raise ValueError("User not found")
         if not user.verify_password(input.password):

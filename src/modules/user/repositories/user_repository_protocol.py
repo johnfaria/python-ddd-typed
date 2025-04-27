@@ -5,5 +5,5 @@ from modules.user.domain.entities.user import User
 
 
 @runtime_checkable
-class UserRepositoryProtocol(Repository, Protocol):
+class UserRepositoryProtocol(Repository[User], Protocol):
     async def find_by_email(self, email: str) -> User | None: ...

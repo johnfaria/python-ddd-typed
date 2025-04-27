@@ -1,7 +1,7 @@
 from core.application.protocols.use_case_protocol import UseCaseProtocol
 from modules.user.application.create_customer_use_case import (
-    CreateCustomerInput,
-    CreateCustomerUseCase,
+    CreateUserInput,
+    CreateUserUseCase,
 )
 from modules.user.repositories.user_repository_in_memory import UserRepositoryInMemory
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
@@ -15,14 +15,14 @@ class TestCreateCustomerUseCase:
         self.user_repository = UserRepositoryInMemory()
 
     def test_create_customer_use_case_instance(self):
-        create_customer_use_case = CreateCustomerUseCase(self.user_repository)
-        assert isinstance(create_customer_use_case, CreateCustomerUseCase)
+        create_customer_use_case = CreateUserUseCase(self.user_repository)
+        assert isinstance(create_customer_use_case, CreateUserUseCase)
         assert isinstance(create_customer_use_case, UseCaseProtocol)
 
     @pytest.mark.asyncio
     async def test_create_customer(self):
-        create_customer_use_case = CreateCustomerUseCase(self.user_repository)
-        input = CreateCustomerInput(
+        create_customer_use_case = CreateUserUseCase(self.user_repository)
+        input = CreateUserInput(
             name="any_name", email="any_email", password="any_password"
         )
         output = await create_customer_use_case.handle(input)
@@ -33,8 +33,8 @@ class TestCreateCustomerUseCase:
 
     @pytest.mark.asyncio
     async def test_should_not_create_customer_with_duplicated_email(self):
-        create_customer_use_case = CreateCustomerUseCase(self.user_repository)
-        input = CreateCustomerInput(
+        create_customer_use_case = CreateUserUseCase(self.user_repository)
+        input = CreateUserInput(
             name="any_name", email="any_email", password="any_password"
         )
         await create_customer_use_case.handle(input)

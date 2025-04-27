@@ -34,7 +34,7 @@ class TestUpdateUserUseCase:
         await user_repository.create(user2)
 
         signin_user_input = SigninUserInput(
-            username="any_email",
+            email="any_email",
             password="any_password",
         )
 

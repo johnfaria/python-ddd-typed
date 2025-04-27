@@ -10,6 +10,7 @@ dependencies = [
     "motor>=3.7.0",
     "pydantic-settings>=2.9.1",
     "pyjwt>=2.10.1",
+    "fastapi[standard]>=0.115.12",
 ]
 requires-python = ">=3.13"
 readme = "README.md"
@@ -30,9 +31,20 @@ dev = [
 ]
 
 [tool.pdm.scripts]
-dev = "python src/main.py"
+start = "uvicorn src.asgi:asgi_app --host 0.0.0.0 --port 8000 --workers 4 --log-level info"
+dev = "fastapi dev src/main.py --host 0.0.0.0 --port 8000 --reload"
 lint = "ruff check src"
 format = "ruff format src"
 test = "pytest"
 vulture = "vulture src"
 precommit = "pre-commit install"
+
+[tool.mypy]
+python_version = "3.13"
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = "modules.*"
+implicit_reexport = true

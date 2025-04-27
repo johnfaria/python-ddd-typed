@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: bitnami/mongodb:7.0
+    platform: linux/amd64
+    container_name: mongo-fastapi
+    environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_REPLICA_SET_KEY=${MONGODB_REPLICA_SET_KEY}
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGODB_REPLICA_SET_NAME=rs0
+      - MONGODB_ADVERTISED_HOSTNAME=mongo
+      - EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1
+    ports:
+      - 27017:27017
+    volumes:
+      - fastapi-mongo:/bitnami/mongodb
+    networks:
+      - fastapi-network
+    restart: unless-stopped
+
+networks:
+  fastapi-network:
+
+volumes:
+  fastapi-mongo:

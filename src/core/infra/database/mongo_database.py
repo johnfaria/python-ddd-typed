@@ -19,7 +19,11 @@ class MongoConnectionManager(DatabaseConnectionManager):
         self.connection.close()
 
     async def is_connected(self) -> bool:
-        return self.connection.opened
+        try:
+            await self.connection.admin.command("ping")
+            return True
+        except Exception:
+            return False
 
 
 class MongoDocumentManager(DatabaseDocumentManager):
