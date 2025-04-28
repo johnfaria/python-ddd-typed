@@ -1,3 +1,4 @@
+from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from modules.user.dto import (
     CreateUserRequest,
@@ -13,6 +14,7 @@ from modules.user.application.create_customer_use_case import (
     CreateUserUseCase,
 )
 from modules.user.application.list_users_use_case import (
+    ListUsersOutput,
     ListUsersUseCase,
 )
 from modules.user.application.signin_user_use_case import (
@@ -38,18 +40,26 @@ user_router = APIRouter(prefix="/api/v1/user", tags=["User"])
     response_description="List of users successfully retrieved",
 )
 async def list_users(
-    use_case: ListUsersUseCase = Depends(
-        UserModuleProviders.use_cases.get_list_users_use_case
-    ),
-):
+    use_case: Annotated[
+        ListUsersUseCase,
+        Depends(UserModuleProviders.use_cases.get_list_users_use_case),
+    ],
+) -> list[ListUsersResponse]:
     """
     Retrieve a list of all users.
 
     Returns:
         list[ListUsersResponse]: A list of user data objects
     """
-    users = await use_case.handle()
-    return users
+    users: list[ListUsersOutput] = await use_case.handle()
+    return [
+        ListUsersResponse(
+            id=user.id,
+            name=user.name,
+            email=user.email,
+        )
+        for user in users
+    ]
 
 
 @user_router.post(

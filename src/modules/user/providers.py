@@ -1,7 +1,8 @@
+from collections.abc import AsyncGenerator
 from core.infra.config.config_pydantic import get_settings
 from core.infra.schemas.user_schema import UserDocument
 from fastapi import Depends
-from typing import AsyncGenerator
+from typing import Annotated, final
 from modules.user.application.create_customer_use_case import CreateUserUseCase
 from modules.user.application.list_users_use_case import ListUsersUseCase
 from modules.user.application.signin_user_use_case import SigninUserUseCase
@@ -28,38 +29,41 @@ class UserRepositoryProviders:
 class UserUseCaseProviders:
     @staticmethod
     async def get_list_users_use_case(
-        user_repository: UserRepositoryProtocol = Depends(
-            UserRepositoryProviders.get_user_repository
-        ),
+        user_repository: Annotated[
+            UserRepositoryProtocol, Depends(UserRepositoryProviders.get_user_repository)
+        ],
     ) -> AsyncGenerator[ListUsersUseCase, None]:
         yield ListUsersUseCase(user_repository)
 
     @staticmethod
     async def get_create_user_use_case(
-        user_repository: UserRepositoryProtocol = Depends(
-            UserRepositoryProviders.get_user_repository
-        ),
+        user_repository: Annotated[
+            UserRepositoryProtocol, Depends(UserRepositoryProviders.get_user_repository)
+        ],
     ) -> AsyncGenerator[CreateUserUseCase, None]:
         yield CreateUserUseCase(user_repository)
 
     @staticmethod
     async def get_signin_user_use_case(
-        user_repository: UserRepositoryProtocol = Depends(
-            UserRepositoryProviders.get_user_repository
-        ),
-        jwt_service: JwtServiceProtocol = Depends(UserServiceProviders.get_jwt_service),
+        user_repository: Annotated[
+            UserRepositoryProtocol, Depends(UserRepositoryProviders.get_user_repository)
+        ],
+        jwt_service: Annotated[
+            JwtServiceProtocol, Depends(UserServiceProviders.get_jwt_service)
+        ],
     ) -> AsyncGenerator[SigninUserUseCase, None]:
         yield SigninUserUseCase(user_repository, jwt_service)
 
     @staticmethod
     async def get_update_user_use_case(
-        user_repository: UserRepositoryProtocol = Depends(
-            UserRepositoryProviders.get_user_repository
-        ),
+        user_repository: Annotated[
+            UserRepositoryProtocol, Depends(UserRepositoryProviders.get_user_repository)
+        ],
     ) -> AsyncGenerator[UpdateUserUseCase, None]:
         yield UpdateUserUseCase(user_repository)
 
 
+@final
 class UserModuleProviders:
     use_cases = UserUseCaseProviders
     repositories = UserRepositoryProviders

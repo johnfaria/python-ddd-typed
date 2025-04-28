@@ -48,3 +48,10 @@ mypy_path = "src"
 [[tool.mypy.overrides]]
 module = "modules.*"
 implicit_reexport = true
+
+[tool.basedpyright]
+typeCheckingMode = "recommended"
+pythonVersion = "3.13"
+include = ["src"]
+stubPath = "src"
+extraPaths = ["src"]
