@@ -1,3 +1,4 @@
+from typing import Any, Sequence
 from core.infra.database.database_adapter import (
     DatabaseConnectionManager,
     DatabaseDocumentManager,
@@ -8,9 +9,13 @@ from beanie import Document, init_beanie
 
 class MongoConnectionManager(DatabaseConnectionManager):
     def __init__(self, connection_string: str):
-        self.connection = AsyncIOMotorClient(connection_string)
+        self.connection: AsyncIOMotorClient[dict[str, Any]] = AsyncIOMotorClient[
+            dict[str, Any]
+        ](connection_string)
 
-    async def connect(self, db_name: str, document_models: list) -> None:
+    async def connect(
+        self, db_name: str, document_models: Sequence[type[Document]]
+    ) -> None:
         await init_beanie(
             database=getattr(self.connection, db_name), document_models=document_models
         )
@@ -26,13 +31,13 @@ class MongoConnectionManager(DatabaseConnectionManager):
             return False
 
 
-class MongoDocumentManager(DatabaseDocumentManager):
+class MongoDocumentManager[T](DatabaseDocumentManager[T]):
     def __init__(self):
-        self.__documents = []
+        self._documents = []
 
-    def add_document(self, document: type[Document]):
-        self.__documents.append(document)
+    def add_document(self, document: T):
+        self._documents.append(document)
 
     @property
     def documents(self):
-        return self.__documents
+        return self._documents

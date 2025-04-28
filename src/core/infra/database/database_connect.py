@@ -1,3 +1,4 @@
+from beanie import Document
 from core.infra.config.config_pydantic import get_settings
 from core.infra.database.mongo_database import (
     MongoConnectionManager,
@@ -8,7 +9,7 @@ from core.infra.schemas.user_schema import UserDocument
 
 # Global instances
 settings = get_settings()
-document_manager = MongoDocumentManager()
+document_manager = MongoDocumentManager[type[Document]]()
 document_manager.add_document(UserDocument)
 connection_manager = MongoConnectionManager(settings.database_url)
 

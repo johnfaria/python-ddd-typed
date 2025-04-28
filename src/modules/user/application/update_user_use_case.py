@@ -18,7 +18,7 @@ class UpdateUserOutput:
     email: str
 
 
-class UpdateUserUseCase(UseCaseProtocol[UpdateUserInput, None]):
+class UpdateUserUseCase(UseCaseProtocol[UpdateUserInput, UpdateUserOutput]):
     def __init__(
         self,
         user_repository: UserRepositoryProtocol,

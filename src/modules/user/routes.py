@@ -1,4 +1,3 @@
-from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from modules.user.dto import (
     CreateUserRequest,
@@ -40,10 +39,9 @@ user_router = APIRouter(prefix="/api/v1/user", tags=["User"])
     response_description="List of users successfully retrieved",
 )
 async def list_users(
-    use_case: Annotated[
-        ListUsersUseCase,
-        Depends(UserModuleProviders.use_cases.get_list_users_use_case),
-    ],
+    use_case: ListUsersUseCase = Depends(
+        UserModuleProviders.use_cases.get_list_users_use_case
+    ),
 ) -> list[ListUsersResponse]:
     """
     Retrieve a list of all users.

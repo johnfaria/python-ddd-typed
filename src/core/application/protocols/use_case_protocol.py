@@ -1,8 +1,7 @@
 from abc import abstractmethod
-from typing import Protocol, runtime_checkable
+from typing import Protocol
 
 
-@runtime_checkable
 class UseCaseProtocol[Input, Output](Protocol):
     @abstractmethod
     async def handle(self, input: Input) -> Output: ...

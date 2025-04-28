@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import override
 from core.application.protocols.use_case_protocol import UseCaseProtocol
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
@@ -11,10 +12,11 @@ class ListUsersOutput:
     status: str
 
 
-class ListUsersUseCase(UseCaseProtocol[None, None]):
+class ListUsersUseCase(UseCaseProtocol[None, list[ListUsersOutput]]):
     def __init__(self, user_repository: UserRepositoryProtocol):
         self.user_repository = user_repository
 
+    @override
     async def handle(self, input: None = None):
         users = await self.user_repository.find_all()
         return [

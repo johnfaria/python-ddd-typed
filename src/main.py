@@ -6,8 +6,8 @@ from modules.user.module import UserModule
 def create_app() -> FastAPI:
     app = FastAPI()
 
-    app.add_event_handler("startup", initialize_database)
-    app.add_event_handler("shutdown", close_database)
+    app.add_event_handler("startup", initialize_database)  # type: ignore
+    app.add_event_handler("shutdown", close_database)  # type: ignore
 
     UserModule.register(app)
 

@@ -15,8 +15,8 @@ class DatabaseConnectionManager(Protocol):
     async def is_connected(self) -> bool: ...
 
 
-class DatabaseDocumentManager(Protocol):
-    __documents: list[Any]
+class DatabaseDocumentManager[T](Protocol):
+    _documents: list[T]
 
     @abstractmethod
-    def add_document(self, document: Any) -> None: ...
+    def add_document(self, document: T) -> None: ...

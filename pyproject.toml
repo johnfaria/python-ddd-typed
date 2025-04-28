@@ -28,6 +28,7 @@ dev = [
     "pytest-env>=1.1.5",
     "debugpy>=1.8.14",
     "pre-commit>=4.2.0",
+    "basedpyright>=1.29.1",
 ]
 
 [tool.pdm.scripts]
@@ -50,8 +51,13 @@ module = "modules.*"
 implicit_reexport = true
 
 [tool.basedpyright]
-typeCheckingMode = "recommended"
+typeCheckingMode = "strict"
+allowedUntypedLibraries = ["pydantic", "fastapi", "uvicorn", "beanie", "jwt", "testcontainers"]
 pythonVersion = "3.13"
 include = ["src"]
 stubPath = "src"
 extraPaths = ["src"]
+exclude = [
+   # exclude all __test__ folders
+    "src/**/__test__",
+]

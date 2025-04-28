@@ -1,9 +1,9 @@
-from typing import Protocol
+from typing import Any, Protocol
 
 from core.domain.protocols.entity_protocol import AggregateRoot
 
 
-class Repository[T: AggregateRoot](Protocol):
+class Repository[T: AggregateRoot[Any]](Protocol):
     async def create(self, entity: T) -> None: ...
 
     async def find_by_id(self, entity_id: str) -> T | None: ...

@@ -1,15 +1,9 @@
-import asyncio
 import logging
 
 from beanie import PydanticObjectId
 from beanie.odm.operators.update.general import Set
-from core.infra.config.config_pydantic import get_settings
-from core.infra.database.mongo_database import (
-    MongoConnectionManager,
-    MongoDocumentManager,
-)
 from core.infra.schemas.user_schema import UserDocument
-from modules.user.domain.entities.user import CreateUserProps, RestoreUserProps, User
+from modules.user.domain.entities.user import RestoreUserProps, User
 from modules.user.repositories.user_repository_protocol import UserRepositoryProtocol
 
 
@@ -114,24 +108,3 @@ class UserRepositoryMongo(UserRepositoryProtocol):
 
     def next_id(self) -> str:
         return str(PydanticObjectId())
-
-
-if __name__ == "__main__":
-
-    async def main():
-        settings = get_settings()
-        document_manager = MongoDocumentManager()
-        document_manager.add_document(UserDocument)
-        connection_manager = MongoConnectionManager(settings.database_url)
-        await connection_manager.connect("test", document_manager.documents)
-        user_repository = UserRepositoryMongo(user_document=UserDocument)
-        user_id = user_repository.next_id()
-        user = User.create(
-            user_id,
-            props=CreateUserProps(
-                name="User", email="mail@mail.com", password="password"
-            ),
-        )
-        await user_repository.create(user)
-
-    asyncio.run(main())

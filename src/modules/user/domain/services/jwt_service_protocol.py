@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from functools import wraps
-from typing import Any, Callable, NamedTuple, Protocol, runtime_checkable
+from typing import Any, Callable, NamedTuple, Protocol
 
 
 class JwtPayload(NamedTuple):
@@ -9,13 +9,12 @@ class JwtPayload(NamedTuple):
     exp: int
 
 
-@runtime_checkable
 class JwtServiceProtocol(Protocol):
     @abstractmethod
     def create_token(self, id: str) -> str: ...
 
     @abstractmethod
-    def verify_token(self, token: str) -> dict | None: ...
+    def verify_token(self, token: str) -> dict[str, Any] | None: ...
 
 
 def require_auth(

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from typing import Any
 
 from core.infra.config.config_pydantic import Settings, get_settings
 import jwt
@@ -25,7 +26,7 @@ class JwtService(JwtServiceProtocol):
             algorithm="HS256",
         )
 
-    def verify_token(self, token: str) -> dict | None:
+    def verify_token(self, token: str) -> dict[str, Any] | None:
         try:
             return jwt.decode(
                 token,

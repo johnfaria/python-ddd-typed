@@ -1,10 +1,11 @@
 import asyncio
+from typing import Any
 from beanie import PydanticObjectId
 from core.domain.protocols.entity_protocol import AggregateRoot
 from core.domain.protocols.repository_protocol import Repository
 
 
-class GenericRepositoryInMemory[T: AggregateRoot](Repository[T]):
+class GenericRepositoryInMemory[T: AggregateRoot[Any]](Repository[T]):
     entities: list[T]
 
     def __init__(self):

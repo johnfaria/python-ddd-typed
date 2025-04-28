@@ -1,6 +1,6 @@
 import logging
 import pytest
-from testcontainers.mongodb import MongoDbContainer
+from testcontainers.mongodb import MongoDbContainer  # type: ignore
 
 
 @pytest.fixture(scope="session", autouse=False)

@@ -1,7 +1,6 @@
-from typing import Protocol, runtime_checkable
+from typing import Protocol
 
 
-@runtime_checkable
 class ConfigProtocol(Protocol):
     database_url: str
     database_name: str
