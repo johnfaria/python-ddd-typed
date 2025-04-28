@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, status
-from modules.user.dto import (
+from modules.user.controllers.dto import (
     CreateUserRequest,
     CreateUserResponse,
     ListUsersResponse,

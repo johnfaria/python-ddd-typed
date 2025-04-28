@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI
 
-from modules.user.routes import user_router
+from modules.user.controllers.routes import user_router
 
 
 class UserModule:

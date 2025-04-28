@@ -4,13 +4,13 @@ version = "0.1.0"
 description = "Domain-Driven Design and Clean Architecture in Python"
 authors = [{ name = "John Faria", email = "johnwbf@hotmail.com" }]
 dependencies = [
-    "pydantic>=2.11.3",
-    "pytest-asyncio>=0.26.0",
-    "beanie>=1.29.0",
-    "motor>=3.7.0",
-    "pydantic-settings>=2.9.1",
-    "pyjwt>=2.10.1",
-    "fastapi[standard]>=0.115.12",
+  "pydantic>=2.11.3",
+  "pytest-asyncio>=0.26.0",
+  "beanie>=1.29.0",
+  "motor>=3.7.0",
+  "pydantic-settings>=2.9.1",
+  "pyjwt>=2.10.1",
+  "fastapi[standard]>=0.115.12",
 ]
 requires-python = ">=3.13"
 readme = "README.md"
@@ -18,17 +18,17 @@ license = { text = "MIT" }
 
 [dependency-groups]
 dev = [
-    "ruff>=0.11.7",
-    "pytest>=8.3.5",
-    "jedi>=0.19.2",
-    "mypy>=1.15.0",
-    "testcontainers>=4.10.0",
-    "vulture>=2.14",
-    "pytest-xdist>=3.6.1",
-    "pytest-env>=1.1.5",
-    "debugpy>=1.8.14",
-    "pre-commit>=4.2.0",
-    "basedpyright>=1.29.1",
+  "ruff>=0.11.7",
+  "pytest>=8.3.5",
+  "jedi>=0.19.2",
+  "mypy>=1.15.0",
+  "testcontainers>=4.10.0",
+  "vulture>=2.14",
+  "pytest-xdist>=3.6.1",
+  "pytest-env>=1.1.5",
+  "debugpy>=1.8.14",
+  "pre-commit>=4.2.0",
+  "basedpyright>=1.29.1",
 ]
 
 [tool.pdm.scripts]
@@ -52,12 +52,16 @@ implicit_reexport = true
 
 [tool.basedpyright]
 typeCheckingMode = "strict"
-allowedUntypedLibraries = ["pydantic", "fastapi", "uvicorn", "beanie", "jwt", "testcontainers"]
+allowedUntypedLibraries = [
+  "pydantic",
+  "fastapi",
+  "uvicorn",
+  "beanie",
+  "jwt",
+  "testcontainers",
+]
 pythonVersion = "3.13"
 include = ["src"]
 stubPath = "src"
 extraPaths = ["src"]
-exclude = [
-   # exclude all __test__ folders
-    "src/**/__test__",
-]
+exclude = ["src/**/__test__"]
